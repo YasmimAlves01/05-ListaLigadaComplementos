@@ -8,6 +8,7 @@ struct NO {
 };
 
 NO* primeiro = NULL;
+NO* ultimo = NULL;
 
 // headers
 void menu();
@@ -70,17 +71,19 @@ void menu()
 void inicializar()
 {
 	// se a lista já possuir elementos
-// libera a memoria ocupada
+	// libera a memoria ocupada
 	NO* aux = primeiro;
 	while (aux != NULL) {
 		NO* paraExcluir = aux;
+
 		aux = aux->prox;
 		free(paraExcluir);
 	}
 
 	primeiro = NULL;
-	cout << "Lista inicializada \n";
+	ultimo = NULL;
 
+	cout << "Lista inicializada \n";
 }
 
 void exibirQuantidadeElementos() {
@@ -124,9 +127,18 @@ void inserirElemento()
 	cin >> novo->valor;
 	novo->prox = NULL;
 
-	if (primeiro == NULL)
+	int digitado = novo->valor;
+
+	NO* pos = posicaoElemento(digitado);
+
+
+	if (primeiro == NULL )
 	{
 		primeiro = novo;
+		ultimo = novo;
+	}
+	else if (pos) {
+		cout << "Esse elemento ja existe\n";
 	}
 	else
 	{
@@ -135,18 +147,77 @@ void inserirElemento()
 		while (aux->prox != NULL) {
 			aux = aux->prox;
 		}
-		aux->prox = novo;
+		ultimo->prox = novo;
+		ultimo = novo;
 	}
+
 }
 
 void excluirElemento()
 {
+	int excluir;
+	NO* atual = primeiro;
+	NO* anterior = NULL;
 
+	cout << "Por favor digite o valor que você quer excluir: \n";
+	cin >> excluir;
+	NO* pos = posicaoElemento(excluir);
+
+	if (pos == NULL)
+	{
+		cout << "o numero digitado não existe!\n";
+	}
+
+	while (atual->valor != excluir)
+	{
+		anterior = atual;
+		atual = atual->prox;
+
+		if (atual->valor == excluir && anterior == NULL)
+		{
+			primeiro = atual->prox;
+		}
+		else if (atual->valor == excluir)
+		{
+			NO* aux = atual;
+			anterior->prox = atual->prox;
+			free(aux);
+
+			cout << "numero excluido com sucesso!\n";
+		}
+	}
 }
 
 void buscarElemento()
 {
+	int digitado;
 
+	cout << "Digite o elemento: ";
+	cin >> digitado;
+
+	NO* pos = posicaoElemento(digitado);
+
+	if (pos == NULL) {
+		cout << "numero não encontrado\n";
+	}
+	else {
+		cout << "Numero digitado existe na lista\n";
+	}
+}
+
+
+
+NO* posicaoElemento(int numero)
+{
+	NO* aux = primeiro;
+	while (aux != NULL) {
+		if (aux->valor == numero)
+		{
+			break;
+		}
+		aux = aux->prox;
+	}
+	return aux;
 }
 
 
