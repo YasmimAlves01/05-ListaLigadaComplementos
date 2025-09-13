@@ -71,7 +71,7 @@ void menu()
 
 void inicializar()
 {
-	// se a lista já possuir elementos
+// se a lista jï¿½ possuir elementos
 // libera a memoria ocupada
 	NO* aux = primeiro;
 	NO* ajd = ultimo;
@@ -122,6 +122,9 @@ void inserirElemento()
 {
 	// aloca memoria dinamicamente para o novo elemento
 	NO* novo = (NO*)malloc(sizeof(NO));
+	NO* atual = primeiro;
+	NO* anterior = NULL;
+
 	if (novo == NULL)
 	{
 		return;
@@ -131,19 +134,26 @@ void inserirElemento()
 	cin >> novo->valor;
 	novo->prox = NULL;
 
-	if (primeiro == NULL)
-	{
-		primeiro = novo;
-	}
-	else
-	{
-		// procura o final da lista
-		NO* aux = primeiro;
-		while (aux->prox != NULL) {
-			aux = aux->prox;
+	while(atual != NULL && atual-> valor < novo->valor){
+		anterior = atual;
+		atual = atual->prox;
+
+}		
+
+		if(atual != NULL && atual->valor == novo->valor){
+			cout << "numero existe";
+			free(novo);
+			return;
 		}
-		aux->prox = novo;
-	}
+		if(anterior == NULL){
+			novo->prox = primeiro;
+			primeiro = novo;
+		}
+		else{
+			novo->prox = atual;
+			anterior->prox = novo;
+		}
+
 }
 
 void excluirElemento()
@@ -152,13 +162,13 @@ void excluirElemento()
 	NO* atual = primeiro;
 	NO* anterior = NULL;
 
-	cout << "Por favor digite o valor que você quer excluir: \n";
+	cout << "Por favor digite o valor que vocï¿½ quer excluir: \n";
 	cin >> excluir;
 	NO* pos = posicaoElemento(excluir);
 
-	if (pos == NULL)
+	if (pos == NULL) 
 	{
-		cout << "o numero digitado não existe!\n";
+		cout << "o numero digitado nï¿½o existe!\n";
 	}
 
 	while (atual->valor != excluir)
@@ -191,7 +201,7 @@ void buscarElemento()
 	NO* pos = posicaoElemento(digitado);
 
 	if (pos == NULL) {
-		cout << "numero não encontrado\n";
+		cout << "numero nï¿½o encontrado\n";
 	}
 	else {
 		cout << "Numero digitado existe na lista\n";
@@ -212,3 +222,27 @@ NO* posicaoElemento(int numero)
 	}
 	return aux;
 }
+
+
+
+
+
+
+
+// resto do inserir
+	// if (primeiro == NULL)
+	// {
+		
+
+		
+	// 	primeiro = novo;
+	// }
+	// else
+	// {
+	// 	// procura o final da lista
+	// 	NO* aux = primeiro;
+	// 	while (aux->prox != NULL) {
+	// 		aux = aux->prox;
+	// 	}
+	// 	aux->prox = novo;
+	// }
