@@ -134,7 +134,7 @@ void inserirElemento()
 	cin >> novo->valor;
 	novo->prox = NULL;
 
-	while(atual != NULL && atual-> valor < novo->valor){
+	while(atual != NULL && atual->valor < novo->valor){
 		anterior = atual;
 		atual = atual->prox;
 
